@@ -9,51 +9,49 @@ class ReflectionCarousel {
     this.init();
   }
 
-init() {
-  this.images.forEach((img, index) => {
-    img.addEventListener("click", () => {
-      if (index === this.currentIndex) {
-        const movieTitle = img.querySelector(".movie-title")?.innerText || "phim này";
-        const imageSrc = img.querySelector("img")?.getAttribute("src");
+  init() {
+    this.images.forEach((img, index) => {
+      img.addEventListener("click", () => {
+        if (index === this.currentIndex) {
+          const movieTitle = img.querySelector(".movie-title")?.innerText || "phim này";
+          const imageSrc = img.querySelector("img")?.getAttribute("src");
 
-        // 👉 Lấy tên file cuối cùng thay vì so sánh cả đường dẫn
-        const fileName = imageSrc.split("/").pop();
+          if (imageSrc && imageSrc.endsWith("/munnn.jpg")) {
+            
+            alert("⚡⚡ Bạn biết chọn ghê nha =)) Mà có người đặt trước rồi muahahahaha");
+            return;
+          }
 
-        if (fileName === "munnn.jpg") {
-          alert("⚡⚡ Bạn biết chọn ghê nha =)) Mà có người đặt trước rồi muahahahaha");
-          return;
+          const message = `Bạn chắc chứ muốn chọn "${movieTitle}"?`;
+          const confirmChoice = confirm(message);
+
+          if (confirmChoice) {
+            // ⭐ GỌI HÀM GỬI THÔNG BÁO Ở ĐÂY ⭐
+            sendNotification(movieTitle);
+
+            // Các hành động còn lại để hiển thị card
+            const carouselContainer = document.getElementById('movie-carousel-container');
+            const notificationCard = document.getElementById('notification-card');
+            const notificationText = document.getElementById('notification-text');
+
+            carouselContainer.classList.add('hidden');
+            notificationText.innerText = `Vậy là chốt kèo xem phim "${movieTitle}" nheee`;
+            notificationCard.classList.remove('hidden');
+            this.stopAutoPlay();
+          }
+
+        } else {
+          this.goToSlide(index);
         }
-
-        const message = `Bạn chắc chứ muốn chọn "${movieTitle}"?`;
-        const confirmChoice = confirm(message);
-
-        if (confirmChoice) {
-          // ⭐ GỌI HÀM GỬI THÔNG BÁO Ở ĐÂY ⭐
-          sendNotification(movieTitle);
-
-          // Các hành động còn lại để hiển thị card
-          const carouselContainer = document.getElementById("movie-carousel-container");
-          const notificationCard = document.getElementById("notification-card");
-          const notificationText = document.getElementById("notification-text");
-
-          carouselContainer.classList.add("hidden");
-          notificationText.innerText = `Vậy là chốt kèo xem phim "${movieTitle}" nheee`;
-          notificationCard.classList.remove("hidden");
-          this.stopAutoPlay();
-        }
-      } else {
-        this.goToSlide(index);
-      }
+      });
     });
-  });
 
-  this.startAutoPlay();
-  const container = document.querySelector(".carousel-container");
-  container.addEventListener("mouseenter", () => this.stopAutoPlay());
-  container.addEventListener("mouseleave", () => this.startAutoPlay());
-  this.updateCarousel();
-}
-
+    this.startAutoPlay();
+    const container = document.querySelector(".carousel-container");
+    container.addEventListener("mouseenter", () => this.stopAutoPlay());
+    container.addEventListener("mouseleave", () => this.startAutoPlay());
+    this.updateCarousel();
+  }
 
   goToSlide(index) {
     if (index === this.currentIndex) return;
