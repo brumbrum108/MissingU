@@ -1,0 +1,451 @@
+/* Page reset */
+html, body {
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  background: #000;
+  color: #e6e6e6;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  overflow: hidden;
+}
+
+/* Keyframes nền */
+@keyframes move-background {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-1000px, 0, 0); }
+}
+
+/* Container nền */
+.background-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+.stars {
+  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat top center;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.twinkling {
+  background: transparent url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/twinkling.png) repeat top center;
+  background-size: 1000px 1000px;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  animation: move-background 70s linear infinite;
+}
+#shooting-stars-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Nội dung chính */
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  padding-top: 3rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  backdrop-filter: blur(2px) saturate(220%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  position: relative;
+  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+.card.hidden {
+  opacity: 0;
+  transform: translateY(-50px);
+  pointer-events: none;
+}
+.card-final {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(50px);
+  pointer-events: none;
+}
+.card-final.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-height: 80px;
+}
+.btn {
+  padding: 0.9rem 1.6rem;
+  font-size: 1.05rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.15); }
+.btn.yes { border-color: rgba(16, 185, 129, 0.4); }
+.btn.no { border-color: rgba(239, 68, 68, 0.4); transition: all 0.3s ease; }
+
+/* cho carousel--- */
+#movie-carousel-container {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: radial-gradient(ellipse at center, #2a2a2a 0%, #0a0a0a 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease-in-out;
+}
+#movie-carousel-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  z-index: 10;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100vw;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container {
+  position: absolute;
+  width: 300px;
+  height: 450px;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  -webkit-box-reflect: below 10px linear-gradient(transparent 0%, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+  box-reflect: below 10px linear-gradient(transparent 0%, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.image-container.center {
+  z-index: 3;
+  transform: translateZ(0px) scale(1);
+}
+
+.image-container.left {
+  z-index: 2;
+  transform: translateX(-280px) rotateY(45deg) scale(0.8);
+  opacity: 0.6;
+}
+
+.image-container.left::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.image-container.right {
+  z-index: 2;
+  transform: translateX(280px) rotateY(-45deg) scale(0.8);
+  opacity: 0.6;
+}
+
+.image-container.right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.image-container.hidden {
+  opacity: 0;
+  transform: translateZ(-200px) scale(0.5);
+  z-index: 1;
+}
+
+.navigation {
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  gap: 20px;
+  z-index: 10;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.dot.active {
+  background: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.1);
+}
+
+.dot.active::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.reflection-floor {
+  position: absolute;
+  bottom: -150px;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    width: 100%;
+    height: 400px;
+  }
+  .image-container {
+    width: 200px;
+    height: 300px;
+  }
+  .image-container.left {
+    transform: translateX(-180px) rotateY(45deg) scale(0.7);
+  }
+  .image-container.right {
+    transform: translateX(180px) rotateY(-45deg) scale(0.7);
+  }
+  .carousel-title {
+    font-size: 1.5rem;
+  }
+}
+
+
+
+/* Overlay info */
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1));
+  color: #fff;
+  padding: 1rem;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Hover overlay */
+.image-container:hover .movie-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation từng dòng text */
+.movie-info > * {
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.image-container:hover .movie-info > * {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.movie-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.movie-genre,
+.movie-duration,
+.movie-rating,
+.movie-description {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+
+#notification-card {
+  position: fixed; /* Hiển thị trên cùng và cố định */
+  inset: 0;
+  z-index: 30; /* Nằm trênh */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6); /* Lớp phủ mờ */
+  transition: opacity 0.5s ease;
+}
+
+#notification-card.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#notification-card .card {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Khi card không bị ẩn, kích hoạt hiệu ứng */
+#notification-card:not(.hidden) .card {
+    transform: scale(1);
+    opacity: 1;
+}
+
+#notification-card h2 {
+  margin-bottom: 0.5rem;
+  color: #4ade80; 
+}
+#notification-card p {
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+#notification-card button {
+  background: #4ade80;
+  border-color: #4ade80;
+}
+#notification-card button:hover {
+  background: #3ac070;
+}
+
+
+/* gif */
+#final-gif-container {
+  /* Căn giữa tuyệt đối */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1); /* Kết hợp transform để căn giữa và scale */
+
+  /* Định dạng chung */
+  text-align: center;
+  width: 90%; /* Giới hạn chiều rộng để không bị vỡ trên mobile */
+  max-width: 350px; /* Kích thước tối đa của container */
+  
+  /* Hiệu ứng chuyển động mượt mà khi xuất hiện */
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Trạng thái bị ẩn của container GIF */
+#final-gif-container.hidden {
+  opacity: 0;
+  /* Vẫn giữ transform căn giữa và thêm scale nhỏ lại */
+  transform: translate(-50%, -50%) scale(0.9); 
+  pointer-events: none;
+}
+
+#final-gif-container img {
+  width: 100%; /* Cho ảnh vừa khít với container */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem; /* Giảm khoảng cách một chút */
+}
+
+#final-gif-container p {
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}

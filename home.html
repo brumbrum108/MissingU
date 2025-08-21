@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> Space Background</title>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Các lớp nền -->
+  <div class="background-container">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <canvas id="shooting-stars-canvas"></canvas>
+  </div>
+
+  <!-- Nội dung chính -->
+  <main class="content">
+    
+    <div class="card card-initial">
+      <h1 id="question">Could you do me a favor?</h1>
+      <div class="actions" id="button-container">
+        <button class="btn yes" id="btn-yes">Yes</button>
+        <button class="btn no" id="btn-no">No</button>
+      </div>
+    </div>
+
+    <div class="card card-final">
+      <h1>Đi coi phim với em...nha</h1>
+      <div class="actions">
+        <button class="btn yes" id="btn-yes-final">Em cũng không biết nút No ở đâu, hay cứ Yes i (BẮT BUỘC)</button>
+      </div>
+    </div>
+
+    <!-- CARD THÔNG BÁO ĐÃ ĐƯỢC CHUYỂN VÀO ĐÂY -->
+    <div id="notification-card" class="hidden">
+      <div class="card">
+        <h2>🎬 Thanks quý khách. I luv you so </h2>
+        <p id="notification-text"></p>
+        <button class="btn" onclick="closeCard()">Tuyệt vời UwU!</button>
+      </div>
+      
+    </div>
+
+    <div id="final-gif-container" class="hidden">
+      <img src="/giphy.gif" alt="gif">
+      <p>Em dễ thương quá chài. Công nương ăn cơm chưa á?</p>
+    </div>
+  </main>
+
+  <!-- CAROUSEL PHIM -->
+  <div id="movie-carousel-container" class="hidden">
+    <h1 class="carousel-title">Chọn phim bạn ưi...</h1>
+    <div class="carousel-container">
+      <div class="carousel-wrapper">
+        <!-- Các .image-container giữ nguyên như cũ -->
+        <div class="image-container center">
+          <img src="/conan.jpg" alt="Conan">
+          <div class="movie-info">
+            <h2 class="movie-title">CONAN: DƯ ẢNH CỦA ĐỘC NHÃN</h2>
+            <p class="movie-genre">Thể loại: Bí ẩn, Hành Động, Hoạt Hình</p>
+            <p class="movie-duration">Thời lượng: 109 phút 50 giây</p>
+            <p class="movie-description">Chàng thám tử đi tới đâu, án mạng tới đó.</p>
+          </div>
+        </div>
+        <div class="image-container right">
+          <img src="/zombiecuaba.jpg" alt="Zombie cua ba">
+          <div class="movie-info">
+            <h2 class="movie-title">Zombie Cưng Của Bà</h2>
+            <p class="movie-genre">Thể loại: Kinh dị, Hài</p>
+            <p class="movie-duration">Thời lượng: 1h 30m</p>
+            <p class="movie-description">Những tình huống dở khóc dở cười khi zombie xuất hiện trong khu phố.</p>
+          </div>
+        </div>
+        <div class="image-container hidden">
+          <img src="/470wx700h-devilnun.jpg" alt="nun">
+          <div class="movie-info">
+          <h2 class="movie-title">Devil Nun</h2>
+            <p class="movie-genre">Thể loại: Kinh dị</p>
+            <p class="movie-duration">Thời lượng: 105p</p>
+            <p class="movie-description">Thấy ghia không dám brief...</p>
+          </div>
+        </div>
+        <div class="image-container hidden">
+          <img src="/together_main-poster_sneak.jpg" alt="leo">
+          <div class="movie-info">
+          <h2 class="movie-title">Déo Lịnh</h2>
+            <p class="movie-genre">Thể loại: Kinh Dị, Tình cảm</p>
+            <p class="movie-duration">Thời lượng: 102p</p>
+            <p class="movie-description">Một cặp đôi đang cố gắng cứu vãn mối quan hệ trên bờ vực đổ vỡ thì dính lẹo.</p>
+          </div>
+        </div>
+        <div class="image-container hidden">
+          <img src="/munnn.jpg" alt="mun">
+          <div class="movie-info">
+          <h2 class="movie-title">Lil Mun aka bé Tí Ti</h2>
+            <p class="movie-genre">Thể loại: Hài hước, Thông minh, Dễ Thương, Xinh xắn</p>
+            <p class="movie-duration">Thời lượng: ♾️ </p>
+            <p class="movie-rating">Rating: ♾️/10</p>
+            <p class="movie-description">Xem mới biết >< .</p>
+          </div>
+        </div>
+        <div class="image-container left">
+          <img src="/470wx700h-noise.jpg" alt="noise">
+          <div class="movie-info">
+          <h2 class="movie-title">Tiếng ồn quỷ dị</h2>
+            <p class="movie-genre">Thể loại: Hồi hộp, Kinh Dị</p>
+            <p class="movie-duration">Thời lượng: 94p</p>
+            <p class="movie-description">Bị làm ồn</p>
+          </div>
+        </div>
+        <div class="reflection-floor"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="shooting-stars.js"></script>
+  <script src="button.js"></script>
+  <script src="carousel.js"></script>
+</body>
+</html>
