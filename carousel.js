@@ -16,7 +16,7 @@ class ReflectionCarousel {
           const movieTitle = img.querySelector(".movie-title")?.innerText || "phim này";
           const imageSrc = img.querySelector("img")?.getAttribute("src");
 
-          if (imageSrc === "/munnn.jpg") {
+          if (imageSrc === "./munnn.jpg") {
             alert("⚡⚡ Bạn biết chọn ghê nha =)) Mà có người đặt trước rồi muahahahaha");
             return;
           }
